@@ -2,12 +2,13 @@
 //  AppDelegate.swift
 //  SrimCalculator
 //
-//  Created by 최원석 on 2020/10/22.
+//  Created by 최원석 on 2020/10/16.
+//  Copyright © 2020 최원석. All rights reserved.
 //
 
 import UIKit
 
-@main
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
