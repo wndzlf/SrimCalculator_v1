@@ -14,6 +14,7 @@
 		9D3A512F253947390011A06A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A512D253947390011A06A /* Main.storyboard */; };
 		9D3A51312539473B0011A06A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A51302539473B0011A06A /* Assets.xcassets */; };
 		9D3A51342539473B0011A06A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A51322539473B0011A06A /* LaunchScreen.storyboard */; };
+		9D7E48E02543F08F0010B505 /* DataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E48DF2543F08F0010B505 /* DataStruct.swift */; };
 		9DD9096D253C3176007B7A70 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9096C253C3176007B7A70 /* ThirdViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		9D3A51302539473B0011A06A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D3A51332539473B0011A06A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D3A51352539473B0011A06A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D7E48DF2543F08F0010B505 /* DataStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStruct.swift; sourceTree = "<group>"; };
 		9DD9096C253C3176007B7A70 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 				9D3A51302539473B0011A06A /* Assets.xcassets */,
 				9D3A51322539473B0011A06A /* LaunchScreen.storyboard */,
 				9D3A51352539473B0011A06A /* Info.plist */,
+				9D7E48DF2543F08F0010B505 /* DataStruct.swift */,
 			);
 			path = SrimCalculator;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			files = (
 				9D16A14F2539C1D100700E07 /* SecondViewController.swift in Sources */,
 				9D3A512C253947390011A06A /* ViewController.swift in Sources */,
+				9D7E48E02543F08F0010B505 /* DataStruct.swift in Sources */,
 				9DD9096D253C3176007B7A70 /* ThirdViewController.swift in Sources */,
 				9D3A5128253947390011A06A /* AppDelegate.swift in Sources */,
 				9D3A512A253947390011A06A /* SceneDelegate.swift in Sources */,
