@@ -9,7 +9,7 @@
 import Foundation
 
 
-// MARK: - Welcome
+// MARK: - CorpCodeStruct
 struct CorpCodeStruct: Codable {
     let result: Result
 }
@@ -32,4 +32,37 @@ struct List: Codable {
 }
 
 
+
+// MARK: - Welcome
+struct Welcome: Codable {
+    let status, message: String
+    let list: [SecondList]
+}
+
+// MARK: - List
+struct SecondList: Codable {
+    let rceptNo, reprtCode, bsnsYear, corpCode: String
+    let sjDiv, sjNm, accountID, accountNm: String
+    let accountDetail, thstrmNm, thstrmAmount, frmtrmNm: String
+    let frmtrmAmount, bfefrmtrmNm, bfefrmtrmAmount, ord: String
+
+    enum CodingKeys: String, CodingKey {
+        case rceptNo = "rcept_no"
+        case reprtCode = "reprt_code"
+        case bsnsYear = "bsns_year"
+        case corpCode = "corp_code"
+        case sjDiv = "sj_div"
+        case sjNm = "sj_nm"
+        case accountID = "account_id"
+        case accountNm = "account_nm"
+        case accountDetail = "account_detail"
+        case thstrmNm = "thstrm_nm"
+        case thstrmAmount = "thstrm_amount"
+        case frmtrmNm = "frmtrm_nm"
+        case frmtrmAmount = "frmtrm_amount"
+        case bfefrmtrmNm = "bfefrmtrm_nm"
+        case bfefrmtrmAmount = "bfefrmtrm_amount"
+        case ord
+    }
+}
 
