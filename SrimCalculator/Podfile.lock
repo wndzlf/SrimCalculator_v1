@@ -1,0 +1,16 @@
+PODS:
+  - SwiftDataTables (0.8.1)
+
+DEPENDENCIES:
+  - SwiftDataTables
+
+SPEC REPOS:
+  trunk:
+    - SwiftDataTables
+
+SPEC CHECKSUMS:
+  SwiftDataTables: 9e5f2ad7e7430c8008a31e66a0237ed29bf6fca8
+
+PODFILE CHECKSUM: 099e2cf738a41cfb3e73b9e21cf1437fa1cdf07a
+
+COCOAPODS: 1.10.0
