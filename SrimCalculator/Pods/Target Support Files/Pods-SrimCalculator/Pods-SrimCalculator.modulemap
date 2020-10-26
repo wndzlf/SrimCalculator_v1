@@ -1,0 +1,6 @@
+framework module Pods_SrimCalculator {
+  umbrella header "Pods-SrimCalculator-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -19,6 +19,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let cellIdentifier:String = "cell"
     
     var corpName:String?
+    var corpCode:String?
     
     
     override func viewDidLoad() {
