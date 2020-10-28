@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class searchCorpVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var searchCoperationTextField: UITextField!
     //
@@ -32,7 +32,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         print(dataAsset.data)
     
-        dataString = String(data: dataAsset.data, encoding: .utf8)
+        dataString = String(data: dataAsset.data, encoding: .utf16)
         print(self.dataString ?? "we don't have string data")
         
         
@@ -50,11 +50,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func clickSearchButton(_ sender: UIButton) {
         
         if let dataString = self.dataString, dataString.contains(self.searchCoperationTextField.text ?? "") {
-            guard let fourthViewController = storyboard?.instantiateViewController(identifier: "FouthViewController") as? FourthViewController else {
+            guard let fourthViewController = storyboard?.instantiateViewController(identifier: "FourthViewController") as? FourthViewController else {
                 return
             }
             
             fourthViewController.corpName = self.searchCoperationTextField.text
+            self.navigationController?.pushViewController(fourthViewController, animated: true)
         } else {
             let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))

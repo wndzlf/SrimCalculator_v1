@@ -11,16 +11,16 @@ import Foundation
 
 // MARK: - CorpCodeStruct
 struct CorpCodeStruct: Codable {
-    let result: Result
+    let result: SearchCorpNameResult
 }
 
-// MARK: - Result
-struct Result: Codable {
-    let list: [List]
+// MARK: - SearchCorpNameResult
+struct SearchCorpNameResult: Codable {
+    let list: [SearchCorpNameList]
 }
 
-// MARK: - List
-struct List: Codable {
+// MARK: - SearchCorpNameList
+struct SearchCorpNameList: Codable {
     let corpCode, corpName, stockCode, modifyDate: [String]
 
     enum CodingKeys: String, CodingKey {
@@ -31,16 +31,14 @@ struct List: Codable {
     }
 }
 
-
-
-// MARK: - Welcome
-struct Welcome: Codable {
+// MARK: - SearchFinancialStatementsResult
+struct SearchFinancialStatementsResult: Codable {
     let status, message: String
-    let list: [SecondList]
+    let list: [FinancialStatementsList]
 }
 
-// MARK: - List
-struct SecondList: Codable {
+// MARK: - FinancialStatementsList
+struct FinancialStatementsList: Codable {
     let rceptNo, reprtCode, bsnsYear, corpCode: String
     let sjDiv, sjNm, accountID, accountNm: String
     let accountDetail, thstrmNm, thstrmAmount, frmtrmNm: String
