@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftDataTables
 
 class FourthViewController: UIViewController {
     
@@ -35,7 +36,7 @@ class FourthViewController: UIViewController {
             print("데이터가 넘어오지않았습니다.")
         }
         
-        APIInstanceClass.APITestfunction { financialData in
+        APIInstanceClass.APIfunctionForFinancialStatements(corpCode: self.corpCode ?? "") { financialData in
             for factor in financialData {
                 if factor.accountNm == "수익(매출액)" {
                     self.salesAccount = factor.thstrmAmount
@@ -65,21 +66,6 @@ class FourthViewController: UIViewController {
             }
         }
     }
+    
+    
 }
-
-
-//        if self.searchCoperationTextField.text != "" {
-//            for listFactor in list {
-//                if listFactor.corpName.first == self.searchCoperationTextField.text {
-//                    guard let fourthViewController = storyboard?.instantiateViewController(identifier: "FourthViewController") as? FourthViewController else {
-//                        return
-//                    }
-//                    fourthViewController.corpName = listFactor.corpName.first
-//                    fourthViewController.corpCode = listFactor.corpCode.first
-//                }
-//            }
-//        } else {
-//            let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
-//            alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))
-//            self.present(alertController, animated: true, completion: nil)
-//        }

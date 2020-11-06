@@ -64,3 +64,10 @@ struct FinancialStatementsList: Codable {
     }
 }
 
+
+//struct FinalFinancialData {
+//    var salesAccount: String
+//    var businessProfits: String
+//    var netIncome: String
+//    var EPS: String
+//}
