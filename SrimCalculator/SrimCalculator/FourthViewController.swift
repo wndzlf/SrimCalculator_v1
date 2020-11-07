@@ -36,7 +36,7 @@ class FourthViewController: UIViewController {
             print("데이터가 넘어오지않았습니다.")
         }
         
-        APIInstanceClass.APIfunctionForFinancialStatements(corpCode: self.corpCode ?? "") { financialData in
+        APIInstanceClass.APIfunctionForFinancialStatements(corpCode: self.corpCode ?? "", year: 2020) { financialData in
             for factor in financialData {
                 if factor.accountNm == "수익(매출액)" {
                     self.salesAccount = factor.thstrmAmount

@@ -40,18 +40,29 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
     @IBAction func clickSearchButton(_ sender: UIButton) {
 
         if self.searchCoperationTextField.text != "" {
+            var isShowAlert: Bool = false
+            
             for factor in list {
-                print(factor.corpName)
+                
                 if factor.corpName.first == self.searchCoperationTextField.text {
+                    isShowAlert = false
                     guard let thirdViewController = storyboard?.instantiateViewController(identifier: "ThirdViewController") as? ThirdViewController else {
                         return
                     }
                     thirdViewController.corpName = factor.corpName.first
                     thirdViewController.corpCode = factor.corpCode.first
                     self.navigationController?.pushViewController(thirdViewController, animated: true)
-                    
+                } else {
+                    isShowAlert = true
                 }
             }
+            
+            if isShowAlert {
+                let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            }
+            
         } else {
             let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))

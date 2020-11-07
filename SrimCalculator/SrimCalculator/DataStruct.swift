@@ -63,11 +63,3 @@ struct FinancialStatementsList: Codable {
         case ord
     }
 }
-
-
-//struct FinalFinancialData {
-//    var salesAccount: String
-//    var businessProfits: String
-//    var netIncome: String
-//    var EPS: String
-//}

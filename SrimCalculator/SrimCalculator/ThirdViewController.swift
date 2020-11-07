@@ -13,86 +13,36 @@ class ThirdViewController: UIViewController {
     
     
     lazy var dataTable = makeDataTable()
-    //    var dataTable: SwiftDataTable?
     var dataSource: DataTableContent = []
-    //    var finacialDataSource: [FinalFinancialData] = []
-    let headerTitles = ["매출액", "영업이익", "당기순이익", "EPS"]
+    let headerTitles = ["년도","매출액", "영업이익", "당기순이익", "EPS"]
     
     var corpCode: String?
     var corpName: String?
-    var salesAccount: String?
-    var businessProfits: String?
-    var netIncome: String?
-    var EPS: String?
     
     private let APIInstanceClass = APIClass()
     
-    //    init() {
-    //        super.init(nibName: nil, bundle: nil)
-    //    }
-    //    required init?(coder aDecoder: NSCoder) {
-    //        fatalError("init(coder:) has not been implemented")
-    //    }
-    
-    //    let dataExample: [DataTableValueType] = [DataTableValueType(5.5), DataTableValueType(3), DataTableValueType("ㅋㅋㅋㅋ")]
-    //
-    //    func numberOfColumns(in: SwiftDataTable) -> Int {
-    //        return 4
-    //    }
-    //
-    //    func numberOfRows(in: SwiftDataTable) -> Int {
-    //        return 3
-    //    }
-    //
-    //    func dataTable(_ dataTable: SwiftDataTable, dataForRowAt index: NSInteger) -> [DataTableValueType] {
-    //        return dataExample
-    //    }
-    //
-    //    func dataTable(_ dataTable: SwiftDataTable, headerTitleForColumnAt columnIndex: NSInteger) -> String {
-    //        return "안녕"
-    //    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //        dataTable?.dataSource = self
-        //        dataTable?.delegate = self
-        
+
         setupViews()
         setupConstraints()
         setupAPIData()
-        addDataSourceAfter()
-        //        addDataSourceAfter()
-        
-        //        let a = DataTableConfiguration()
-        //
-        //        self.dataTable = SwiftDataTable(dataSource: self,
-        //                                        options: a,
-        //                                        frame: CGRect(x: 0, y: 0, width: view.frame.width , height: view.frame.height))
-        //        self.dataTable?.backgroundColor = .red
-        //
-        //
-        //        self.view.addSubview(self.dataTable!)
-        // Do any additional setup after loading the view.
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    func setupViews() {
+    private func setupViews() {
         automaticallyAdjustsScrollViewInsets = false
         navigationController?.navigationBar.isTranslucent = false
-        title = "Streaming fans"
+        title = "재무제표 리스트"
         view.backgroundColor = UIColor.red
         view.addSubview(dataTable)
         dataTable.reload()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             dataTable.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             dataTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -101,59 +51,42 @@ class ThirdViewController: UIViewController {
         ])
     }
     
-    func setupAPIData() {
-        APIInstanceClass.APIfunctionForFinancialStatements(corpCode: self.corpCode ?? "") { financialData in
-            for factor in financialData {
-                if factor.accountNm == "수익(매출액)" {
-                    self.salesAccount = factor.thstrmAmount
-                    print(self.salesAccount ?? "")
-                    
-                } else if factor.accountNm == "영업이익(손실)"  {
-                    self.businessProfits = factor.thstrmAmount
-                    print(self.businessProfits ?? "")
-                    
-                } else if factor.accountNm == "당기순이익(손실)" && factor.sjNm == "손익계산서" {
-                    self.netIncome = factor.thstrmAmount
-                    print(self.netIncome ?? "")
-                    
-                } else if factor.accountNm == "기본주당이익(손실)" {
-                    self.EPS = factor.thstrmAmount
-                    print(self.EPS ?? "")
-                    
+    private func setupAPIData() {
+        for year in 2010...2019 {
+            APIInstanceClass.APIfunctionForFinancialStatements(corpCode: self.corpCode ?? "", year: year) { financialData in
+                
+                var year: DataTableValueType = .int(year)
+                var account: DataTableValueType = .string("")
+                var businessProfit: DataTableValueType = .string("")
+                var netIncome: DataTableValueType = .string("")
+                var EPS: DataTableValueType = .string("")
+                
+                for factor in financialData {
+                    if factor.accountNm.contains("매출액") {
+                        account = DataTableValueType.string(factor.thstrmAmount)
+                        
+                    } else if factor.accountNm.contains("영업이익")  {
+                        businessProfit = DataTableValueType.string(factor.thstrmAmount)
+                        
+                    } else if factor.accountNm.contains("당기순이익") && factor.sjNm.contains("손익계산서") {
+                        netIncome = DataTableValueType.string(factor.thstrmAmount)
+                        
+                    } else if factor.accountNm.contains("기본주당이익") {
+                        EPS = DataTableValueType.string(factor.thstrmAmount)
+                    }
                 }
+                let temp = [year, account, businessProfit, netIncome, EPS]
+                self.updateDataSourece(temp)
             }
         }
     }
     
-    
-    public func addDataSourceAfter(){
-        
-        self.dataSource = [
-            [
-                DataTableValueType.string(salesAccount ?? ""),
-                DataTableValueType.string(businessProfits ?? ""),
-                DataTableValueType.string(netIncome ?? ""),
-                //                DataTableValueType.string("Be a game publisher"),
-                DataTableValueType.string(EPS ?? "")
-//            ],
-//            [
-//                DataTableValueType.string("NoelDavies"),
-//                DataTableValueType.string("Water"),
-//                DataTableValueType.string("Php and Javascript"),
-//                //                DataTableValueType.string("'Be a fucking paratrooper machine'"),
-//                DataTableValueType.float(185.80)
-//            ],
-//            [
-//                DataTableValueType.string("Redsaint"),
-//                DataTableValueType.string("Cheerwine and Dr.Pepper"),
-//                DataTableValueType.string("Java"),
-//                //                DataTableValueType.string("'Creating an awesome RPG Game game'"),
-//                DataTableValueType.float(185.42)
-            ]
-        ]
-        dataTable.reload()
+    private func updateDataSourece(_ dataSource: [DataTableValueType]) {
+        DispatchQueue.main.async {
+            self.dataSource.append(dataSource)
+            self.dataTable.reload()
+        }
     }
-    
 }
 
 extension ThirdViewController {
@@ -161,6 +94,7 @@ extension ThirdViewController {
         let dataTable = SwiftDataTable(dataSource: self)
         dataTable.translatesAutoresizingMaskIntoConstraints = false
         dataTable.delegate = self
+        dataTable.dataSource = self
         return dataTable
     }
 }
