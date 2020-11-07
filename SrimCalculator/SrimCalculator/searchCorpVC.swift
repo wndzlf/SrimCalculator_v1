@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import SearchTextField
+import SearchTextField // https://github.com/apasccon/SearchTextField
 
 class searchCorpVC: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var searchCoperationTextField: SearchTextField!
+    @IBOutlet private weak var searchCoperationTextField: SearchTextField!
     
     private var corpCodeStruct: [CorpCodeStruct] = []
     private var result: [SearchCorpNameResult] = []
@@ -22,6 +22,15 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.setList()
+        self.setupSearchCoperationTextField()
+    }
+    
+    private func setupSearchCoperationTextField() {
+        self.searchCoperationTextField.maxNumberOfResults = 5
+        self.searchCoperationTextField.itemSelectionHandler = { item, itemPosition in
+            self.searchCoperationTextField.text = item[itemPosition].title
+            self.pushToThrirdViewController()
+        }
     }
     
     private func setSearchCoperationTextField(_ dataList: [SearchCorpNameList]) {
@@ -33,17 +42,16 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
     }
     
     private func setList() {
-        let jsonDecoder:JSONDecoder = JSONDecoder()
         guard let dataAsset: NSDataAsset = NSDataAsset(name: "CorpCodeJsonData") else {
             return print("we don't have any data")
         }
         
         do {
+            let jsonDecoder = JSONDecoder()
             let dataCorpStruct = try jsonDecoder.decode(CorpCodeStruct.self, from: dataAsset.data)
-            let dataResult = dataCorpStruct.result
-            let dataList = dataResult.list
-            self.list = dataList
-            self.setSearchCoperationTextField(dataList)
+            
+            self.list = dataCorpStruct.result.list
+            self.setSearchCoperationTextField(dataCorpStruct.result.list)
             
         } catch {
             print(error.localizedDescription)
@@ -51,12 +59,15 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func clickSearchButton(_ sender: UIButton) {
-        
         guard self.searchCoperationTextField.text != "" else {
             self.showAlert()
             return
         }
         
+        self.pushToThrirdViewController()
+    }
+    
+    private func pushToThrirdViewController() {
         var isShowAlert: Bool = true
         
         for factor in list {
