@@ -10,17 +10,20 @@ import UIKit
 
 class searchCorpVC: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var searchCoperationTextField: UITextField!
-    //
-    var corpCodeStruct: [CorpCodeStruct] = []
-    var result: [SearchCorpNameResult] = []
-    var list: [SearchCorpNameList] = []
-    var dataString: String?
+    @IBOutlet private weak var searchCoperationTextField: UITextField!
+    
+    private var corpCodeStruct: [CorpCodeStruct] = []
+    private var result: [SearchCorpNameResult] = []
+    private var list: [SearchCorpNameList] = []
+    private var dataString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        self.setList()
+    }
+    
+    private func setList() {
         let jsonDecoder:JSONDecoder = JSONDecoder()
         guard let dataAsset: NSDataAsset = NSDataAsset(name: "CorpCodeJsonData") else {
             return print("we don't have any data")
@@ -38,35 +41,37 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func clickSearchButton(_ sender: UIButton) {
-
-        if self.searchCoperationTextField.text != "" {
-            var isShowAlert: Bool = false
-            
-            for factor in list {
-                
-                if factor.corpName.first == self.searchCoperationTextField.text {
-                    isShowAlert = false
-                    guard let thirdViewController = storyboard?.instantiateViewController(identifier: "ThirdViewController") as? ThirdViewController else {
-                        return
-                    }
-                    thirdViewController.corpName = factor.corpName.first
-                    thirdViewController.corpCode = factor.corpCode.first
-                    self.navigationController?.pushViewController(thirdViewController, animated: true)
-                } else {
-                    isShowAlert = true
-                }
-            }
-            
-            if isShowAlert {
-                let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
-            }
-            
-        } else {
-            let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
+        
+        guard self.searchCoperationTextField.text != "" else {
+            self.showAlert()
+            return
         }
+        
+        var isShowAlert: Bool = true
+        
+        for factor in list {
+            //TODO: for 문 안에서 여러번 push 하는 경우 어떻게 처리할지 고민!
+            if factor.corpName.first == self.searchCoperationTextField.text {
+                isShowAlert = false
+                
+                guard let thirdViewController = storyboard?.instantiateViewController(identifier: "ThirdViewController") as? ThirdViewController else {
+                    return
+                }
+                thirdViewController.corpName = factor.corpName.first
+                thirdViewController.corpCode = factor.corpCode.first
+                
+                self.navigationController?.pushViewController(thirdViewController, animated: true)
+            }
+        }
+        
+        if isShowAlert {
+            self.showAlert()
+        }
+    }
+    
+    private func showAlert() {
+        let alertController = UIAlertController(title: "알림창", message: "기업 이름을 입력해주세요!", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "경고", style: .destructive, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
