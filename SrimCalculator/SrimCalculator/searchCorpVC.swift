@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import SearchTextField
 
 class searchCorpVC: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet private weak var searchCoperationTextField: UITextField!
+    @IBOutlet weak var searchCoperationTextField: SearchTextField!
     
     private var corpCodeStruct: [CorpCodeStruct] = []
     private var result: [SearchCorpNameResult] = []
@@ -21,6 +22,14 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.setList()
+    }
+    
+    private func setSearchCoperationTextField(_ dataList: [SearchCorpNameList]) {
+        var suggestionItems: [SearchTextFieldItem] = []
+        for data in self.list {
+            suggestionItems.append(SearchTextFieldItem(title: data.corpName.first ?? ""))
+        }
+        self.searchCoperationTextField.filterItems(suggestionItems)
     }
     
     private func setList() {
@@ -34,6 +43,7 @@ class searchCorpVC: UIViewController, UITextFieldDelegate {
             let dataResult = dataCorpStruct.result
             let dataList = dataResult.list
             self.list = dataList
+            self.setSearchCoperationTextField(dataList)
             
         } catch {
             print(error.localizedDescription)
